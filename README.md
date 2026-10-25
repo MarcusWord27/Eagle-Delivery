@@ -1,12 +1,12 @@
-# Eagle Delivery: Project 1 starter
+# Eagle Delivery: Project 1 starter #
 
-This is our project 1 that focuses on search and reinforcement learning. Edit this readme file with your own project introduction and run commands for your GitHub commits.
+Project 1 that focuses on search and reinforcement learning.
 
-## Requirements
+## Requirements ##
 
 Use Python 3.9+.
 
-## What already works
+## What already works ##
 
 ```bash
 python3 run_project.py show
@@ -20,9 +20,9 @@ python3 -m unittest tests.test_environment -v
 On `emu_campus.txt`, BFS from S to W should return path length **18** and **67**
 expanded nodes, The path visualization uses `o`.
 
-## Your implementation tasks
+## Implementation tasks ##
 
-Edit only these four functions in `agents.py` for the required algorithms:
+Edit four functions in `agents.py` for required algorithms:
 
 1. `manhattan(state, goal)`
 2. `astar(campus, start, goal)`
