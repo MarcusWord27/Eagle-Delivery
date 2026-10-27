@@ -57,10 +57,12 @@ def epsilon_greedy(q_values, state, actions, epsilon, rng):
 
 def q_learning_update(q_values, state, action, reward, next_state,
                       actions, alpha, gamma, terminal):
-    """TODO 4: Update exactly one Q-table entry in place; return nothing."""
-    # Get Q(state, action), defaulting to 0.0.
-    # If terminal is True, the target is reward with no continuation term.
-    # Otherwise target = reward + gamma * max Q(next_state, next_action).
-    # Consider every action, including unseen entries with value 0.0.
-    # Apply Q <- Q + alpha * (target - Q).
-    raise NotImplementedError("Complete TODO 4: q_learning_update")
+    """Update the Q-value for a single state-action pair in place."""
+    current = q_values.get((state, action), 0.0)
+    if terminal:
+        target = reward
+    else:
+        best_next = max(q_values.get((next_state, next_action), 0.0)
+                        for next_action in actions)
+        target = reward + gamma * best_next
+    q_values[(state, action)] = current + alpha * (target - current)
