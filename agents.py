@@ -49,10 +49,16 @@ def astar(campus, start, goal):
 
 
 def epsilon_greedy(q_values, state, actions, epsilon, rng):
-    """TODO 3: Choose an action with epsilon-greedy exploration."""
-    # q_values is a dictionary. Its keys are (state, action) pairs.
-    # Example key: ((1, 1), "RIGHT"). Unseen entries have value 0.0.
-    raise NotImplementedError("Complete TODO 3: epsilon_greedy")
+    """Choose a random action with probability epsilon, otherwise a best action."""
+    if rng.random() < epsilon:
+        return rng.choice(actions)
+
+    best_value = max(q_values.get((state, action), 0.0) for action in actions)
+    best_actions = [
+        action for action in actions
+        if q_values.get((state, action), 0.0) == best_value
+    ]
+    return rng.choice(best_actions)
 
 
 def q_learning_update(q_values, state, action, reward, next_state,
