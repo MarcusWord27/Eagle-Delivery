@@ -41,10 +41,31 @@ def manhattan(state, goal):
 
 
 def astar(campus, start, goal):
-    """TODO 2: Return SearchResult(path, expanded) for A* graph search."""
-    # Use heapq as a priority queue and manhattan() as the heuristic.
-    # Track best known g-costs and parent states in dictionaries.
-    raise NotImplementedError("Complete TODO 2: astar")
+    """Find a shortest path with A* and report expanded nodes."""
+    frontier = []
+    tie = count()
+    heapq.heappush(frontier, (manhattan(start, goal), next(tie), 0, start))
+    best_cost = {start: 0}
+    parents = {start: None}
+    expanded = 0
+
+    while frontier:
+        _, _, cost, state = heapq.heappop(frontier)
+        if cost != best_cost[state]:
+            continue
+        if state == goal:
+            return SearchResult(reconstruct_path(parents, goal), expanded)
+
+        expanded += 1
+        for _, successor in campus.neighbors(state):
+            new_cost = cost + 1
+            if new_cost < best_cost.get(successor, float("inf")):
+                best_cost[successor] = new_cost
+                parents[successor] = state
+                priority = new_cost + manhattan(successor, goal)
+                heapq.heappush(frontier, (priority, next(tie), new_cost, successor))
+
+    return SearchResult(None, expanded)
 
 
 def epsilon_greedy(q_values, state, actions, epsilon, rng):
